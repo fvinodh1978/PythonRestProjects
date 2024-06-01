@@ -22,7 +22,7 @@ def get_test_cases(request):
 def get_test_details(request, id):
     try:
         testcase = TestCases.objects.get(pk=id)
-    except TestCases.ObjectDoesNotExist:
+    except ObjectDoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     serializer = TestCasesSerializer(testcase)
@@ -51,7 +51,7 @@ def add_test_cases(request):
 def update_test_cases(request, id):
     try:
         testcase = TestCases.objects.get(pk=id)
-    except TestCases.DoesNotExists:
+    except ObjectDoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     serializer = TestCasesSerializer(testcase, data=request.data)
@@ -59,3 +59,13 @@ def update_test_cases(request, id):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#Update a Testcase
+@api_view(['DELETE'])
+def delete_test_cases(request, id):
+    try:
+        testcase = TestCases.objects.get(pk=id)
+        testcase.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
