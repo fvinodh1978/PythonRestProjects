@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
+from CrossCheck.utils.invokePytest import run_test
 
 
 #Get the list of all the (testcases
@@ -60,6 +61,7 @@ def update_test_cases(request, id):
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 #Update a Testcase
 @api_view(['DELETE'])
 def delete_test_cases(request, id):
@@ -69,3 +71,12 @@ def delete_test_cases(request, id):
         return Response(status=status.HTTP_204_NO_CONTENT)
     except ObjectDoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+#Add a New Testcase
+@api_view(['POST'])
+def execute_test(request):
+    serializer = TestCasesSerializer(data=request.data)
+    if serializer.is_valid():
+        run_test(serializer.data['testCaseName'])
+        return Response({'tests': serializer.data['testCaseName']}, status=status.HTTP_200_OK)

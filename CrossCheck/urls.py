@@ -25,5 +25,6 @@ urlpatterns = [
     path('getTestCases/<int:id>', views.get_test_details),
     path('addTestCase', views.add_test_cases),
     path('updateTestCase/<int:id>',views.update_test_cases),
-    path('deleteTestCase/<int:id>',views.delete_test_cases)
+    path('deleteTestCase/<int:id>',views.delete_test_cases),
+    path('runTest', views.execute_test)
 ]
