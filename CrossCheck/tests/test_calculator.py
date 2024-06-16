@@ -8,7 +8,11 @@ from CrossCheck.src.calculator import (
 def test_summation():
     """
     Testing Summation function
+
     """
+    for i in range(10):
+        print("Vinodh")
+
     assert summation(2, 10) == 12
     assert summation(3, 5) == 8
     assert summation(4, 6) == 10

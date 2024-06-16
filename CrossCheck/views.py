@@ -27,6 +27,7 @@ def get_test_details(request, id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     serializer = TestCasesSerializer(testcase)
+    Response.AppendHeader("Access-Control-Allow-Origin", "*");
     return Response(serializer.data)
 
 
@@ -78,5 +79,6 @@ def delete_test_cases(request, id):
 def execute_test(request):
     serializer = TestCasesSerializer(data=request.data)
     if serializer.is_valid():
-        run_test(serializer.data['testCaseName'])
-        return Response({'tests': serializer.data['testCaseName']}, status=status.HTTP_200_OK)
+        test_result=run_test(serializer.data['testCaseName'])
+        #return Response({'tests': serializer.data['testCaseName']}, status=status.HTTP_200_OK)
+        return Response({'tests': test_result}, status=status.HTTP_200_OK)
