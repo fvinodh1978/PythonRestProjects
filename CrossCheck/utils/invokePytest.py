@@ -10,7 +10,7 @@ def run_test1(testcase):
     print(retcode)
 
 def run_test(testcase):
-    command = "pytest -k test_calculator.py"
+    command = "pytest -k test_calculator.py -s"
     try:
         result = subprocess.check_output(command, shell=True, text=True)
         print(result)

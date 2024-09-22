@@ -5,6 +5,7 @@ from CrossCheck.src.calculator import (
     division
 )
 
+
 def test_summation():
     """
     Testing Summation function
@@ -17,6 +18,20 @@ def test_summation():
     assert summation(3, 5) == 8
     assert summation(4, 6) == 10
 
+
+def test_summation1():
+    """
+    Testing Summation function
+
+    """
+    for i in range(10):
+        print("Vinodh")
+
+    assert summation(2, 10) == 12
+    assert summation(3, 5) == 8
+    assert summation(4, 6) == 10
+
+
 def test_subtraction():
     """
     Testing Subtraction function
@@ -25,6 +40,7 @@ def test_subtraction():
     assert subtraction(7, 5) == 2
     assert subtraction(4, 2) == 2
 
+
 def test_multiplication():
     """
     Testing Multiplication function
@@ -32,6 +48,7 @@ def test_multiplication():
     assert multiplication(2, 2) == 4
     assert multiplication(7, 2) == 14
     assert multiplication(10, 2) == 20
+
 
 def test_Division():
     """

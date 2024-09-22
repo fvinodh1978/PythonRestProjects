@@ -8,9 +8,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
 from CrossCheck.utils.invokePytest import run_test
+from django.http import StreamingHttpResponse
 
-
-#Get the list of all the (testcases
+#Get the list of all the testcases
 @api_view(['GET'])
 def get_test_cases(request):
     test_status = TestCases.objects.all()
@@ -27,7 +27,7 @@ def get_test_details(request, id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     serializer = TestCasesSerializer(testcase)
-    Response.AppendHeader("Access-Control-Allow-Origin", "*");
+    # Response.AppendHeader("Access-Control-Allow-Origin", "*");
     return Response(serializer.data)
 
 
@@ -79,6 +79,19 @@ def delete_test_cases(request, id):
 def execute_test(request):
     serializer = TestCasesSerializer(data=request.data)
     if serializer.is_valid():
-        test_result=run_test(serializer.data['testCaseName'])
+        test_result = run_test(serializer.data['testCaseName'])
         #return Response({'tests': serializer.data['testCaseName']}, status=status.HTTP_200_OK)
         return Response({'tests': test_result}, status=status.HTTP_200_OK)
+
+
+def generate_stream():
+    # Your logic to generate the data stream
+    yield "data1\n"
+    yield "data2\n"
+    # ...
+
+
+def stream_data(request):
+    response = StreamingHttpResponse(generate_stream(), content_type="text/plain")
+    response['Content-Disposition'] = 'attachment; filename="stream.txt"'
+    return response
