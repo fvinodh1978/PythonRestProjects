@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'rest_framework',
+    'rest_framework_simplejwt',
     'CrossCheck',
     'corsheaders',
     'django.contrib.admin',
