@@ -20,7 +20,9 @@ from CrossCheck import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('/getTestStatus', views.get_test_status),
+    path('signUp', views.sign_up),
+    path('login', views.login),
+    path('getTestStatus', views.get_test_status),
     path('getTestCases', views.get_test_cases),
     path('getTestCases/<int:id>', views.get_test_details),
     path('addTestCase', views.add_test_cases),

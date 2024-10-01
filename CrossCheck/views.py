@@ -1,14 +1,42 @@
+from django.contrib.auth import authenticate
 from django.db.migrations import serializer
 from django.http import JsonResponse
+from rest_framework_simplejwt.tokens import RefreshToken
 
-from .models import TestCases
-from .serializers import TestCasesSerializer
+from .models import TestCases, Users
+from .serializers import TestCasesSerializer, UsersSerializer, UserLoginSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
 from CrossCheck.utils.invokePytest import run_test
 from django.http import StreamingHttpResponse
+
+
+#Get the Testcase Status
+@api_view(['POST'])
+def sign_up(request):
+    serializer = UsersSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+@api_view(['POST'])
+def login(request):
+    serializer = UserLoginSerializer(data=request.data)
+    print(request.data)
+    if serializer.is_valid():
+        username = serializer.validated_data['username']
+        password = serializer.validated_data['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            })
+        return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 #Get the list of all the testcases
 @api_view(['GET'])
