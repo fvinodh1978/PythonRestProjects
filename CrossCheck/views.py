@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import TestCases, Users
-from .serializers import TestCasesSerializer, UsersSerializer, UserLoginSerializer
+from .serializers import TestCasesSerializer, ActiveUsersSerializer, UserLoginSerializer, AuthUserSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -16,7 +16,7 @@ from django.http import StreamingHttpResponse
 #Get the Testcase Status
 @api_view(['POST'])
 def sign_up(request):
-    serializer = UsersSerializer(data=request.data)
+    serializer = AuthUserSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)

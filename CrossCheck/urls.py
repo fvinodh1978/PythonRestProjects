@@ -18,6 +18,9 @@ from django.contrib import admin
 from django.urls import path
 from CrossCheck import views
 
+#Admin User : admin
+#Password : MyAdminPassword
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('signUp', views.sign_up),
@@ -26,7 +29,7 @@ urlpatterns = [
     path('getTestCases', views.get_test_cases),
     path('getTestCases/<int:id>', views.get_test_details),
     path('addTestCase', views.add_test_cases),
-    path('updateTestCase/<int:id>',views.update_test_cases),
-    path('deleteTestCase/<int:id>',views.delete_test_cases),
+    path('updateTestCase/<int:id>', views.update_test_cases),
+    path('deleteTestCase/<int:id>', views.delete_test_cases),
     path('runTest', views.execute_test)
 ]
