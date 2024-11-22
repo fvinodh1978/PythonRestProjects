@@ -14,12 +14,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import os
+import sys
+
+# sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), 'CrossCheck')))
+
 from django.contrib import admin
 from django.urls import path
 from CrossCheck import views
-
-#Admin User : admin
-#Password : MyAdminPassword
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,8 +30,13 @@ urlpatterns = [
     path('getTestStatus', views.get_test_status),
     path('getTestCases', views.get_test_cases),
     path('getTestCases/<int:id>', views.get_test_details),
-    path('addTestCase', views.add_test_cases),
-    path('updateTestCase/<int:id>', views.update_test_cases),
-    path('deleteTestCase/<int:id>', views.delete_test_cases),
-    path('runTest', views.execute_test)
+    path('addTestCase', views.add_test_case),
+    path('updateTestCase', views.update_test_case),
+    # path('updateTestCase/<str:id>', views.update_test_cases),
+    path('deleteTestCase/<str:id>', views.delete_test_cases),
+    path('runTest', views.execute_test),
+    path('api/fetch-output/', views.fetch_script_output, name='fetch_output'),
+    path('api/terminate-script/', views.terminate_script, name='terminate_script'),
+    path('api/discoverTests', views.discover_tests, name='discover_tests'),
+    path('api/add_test_cases/', views.add_test_case, name='add_test_case')
 ]

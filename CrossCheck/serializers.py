@@ -1,7 +1,8 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from CrossCheck.models import TestCases, Users
+from CrossCheck.models import TestCases, Users, TestCase
+
 
 class AuthUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,10 +18,15 @@ class AuthUserSerializer(serializers.ModelSerializer):
         )
         return user
 
+
 class TestCasesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TestCases
-        fields = ['id', 'testCaseName', 'description', 'type']
+        # model = TestCases
+        model = TestCase
+        # fields = ['id', 'testCaseName', 'description', 'type', 'testSteps', 'scriptName', 'testProfile', 'createdBy','createdOn']
+        fields = ['id', 'name', 'suite', 'module', 'description', 'type', 'testprofile', 'created',
+                  'updated', 'createdby', 'updatedby']
+
 
 class ActiveUsersSerializer(serializers.ModelSerializer):
     class Meta:
@@ -52,4 +58,3 @@ class UserLoginSerializer(serializers.Serializer):
                 raise serializers.ValidationError("Unable to log in with provided credentials.")
         else:
             raise serializers.ValidationError("Must include 'username' and 'password'.")
-

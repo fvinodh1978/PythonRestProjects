@@ -26,8 +26,6 @@ SECRET_KEY = 'django-insecure-t6qvbcjl!ap11@joi!h^%($ot2di_00mk-ub47&8a-v2(t^khg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_apscheduler'
 ]
 
 MIDDLEWARE = [
@@ -57,6 +56,14 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:4200',  # Replace with your frontend domain
+    'http://localhost:8000',
+    'http://testserver'
+]
+
+ALLOWED_HOSTS = [
+    'testserver',
+    'localhost',
+    '127.0.0.1'
 ]
 
 ROOT_URLCONF = 'CrossCheck.urls'
@@ -139,3 +146,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 TEMPLATE_DIRS = (
     os.path.join(SETTINGS_PATH, 'templates'),
 )
+
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+
+APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds
